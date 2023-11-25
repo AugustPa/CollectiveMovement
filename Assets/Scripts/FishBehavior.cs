@@ -103,6 +103,7 @@ public class Fish : MonoBehaviour
     private Vector3 CalculateCohesion()
     {
         Vector3 centerOfMass = Vector3.zero;
+        Vector3 cohesionVector = Vector3.zero;
         int neighborsCount = 0;
         float neighborRadius = 3.0f; // Adjust as needed
 
@@ -119,7 +120,7 @@ public class Fish : MonoBehaviour
         if (neighborsCount > 0)
         {
             centerOfMass /= neighborsCount;
-            Vector3 cohesionVector = centerOfMass - position;
+            cohesionVector = centerOfMass - position;
             cohesionVector.Normalize();
             return cohesionVector;
         }

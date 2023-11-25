@@ -20,7 +20,17 @@ public class Simulation : MonoBehaviour
             Vector3 randomPosition = new Vector3(Random.value, Random.value, Random.value);
             GameObject fishObject = Instantiate(fishPrefab, randomPosition, Quaternion.identity);
             Fish fish = fishObject.GetComponent<Fish>();
-            fishSchool.Add(fish);
+
+            if (fish != null)
+            {
+                fishSchool.Add(fish);
+            }
+        }
+
+        foreach (Fish fish in fishSchool)
+        {
+            fish.SetFishSchool(fishSchool);
         }
     }
+
 }
