@@ -19,6 +19,7 @@ public class Fish : MonoBehaviour
         ApplyBehaviors();
         velocity += acceleration * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         LimitSpeed();
         acceleration = Vector3.zero;
 
@@ -68,6 +69,8 @@ public class Fish : MonoBehaviour
             separationVector /= neighborsCount;
         }
 
+        separationVector = new Vector3(separationVector.x, separationVector.y, 0);
+
         // Debug Log for Separation Force
         Debug.Log("Separation - Count: " + neighborsCount + ", Force: " + separationVector);
         return separationVector;
@@ -95,6 +98,7 @@ public class Fish : MonoBehaviour
             averageVelocity.Normalize();
         }
 
+        averageVelocity = new Vector3(averageVelocity.x, averageVelocity.y, 0);
         // Debug Log for Alignment Force
         Debug.Log("Alignment - Count: " + neighborsCount + ", Force: " + averageVelocity);
         return averageVelocity;
@@ -124,7 +128,7 @@ public class Fish : MonoBehaviour
             cohesionVector.Normalize();
             return cohesionVector;
         }
-
+        cohesionVector = new Vector3(cohesionVector.x, cohesionVector.y, 0);
         // Debug Log for Cohesion Force
         Debug.Log("Cohesion - Count: " + neighborsCount + ", Force: " + cohesionVector);
         return Vector3.zero;
