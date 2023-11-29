@@ -10,9 +10,9 @@ public class Simulation : MonoBehaviour
     public List<Fish> fishSchool = new List<Fish>();
 
     // UI Sliders
-    public Slider separationSlider;
+    public Slider repulsionSlider;
     public Slider alignmentSlider;
-    public Slider cohesionSlider;
+    public Slider attractionSlider;
 
     private void Start()
     {
@@ -48,14 +48,14 @@ public class Simulation : MonoBehaviour
     private void UpdateFishWeights()
     {
         // Get values from sliders
-        float separation = separationSlider.value;
+        float repulsion = repulsionSlider.value;
         float alignment = alignmentSlider.value;
-        float cohesion = cohesionSlider.value;
+        float attraction = attractionSlider.value;
 
         // Update each fish with new weights
         foreach (Fish fish in fishSchool)
         {
-            fish.SetBehaviorWeights(separation, alignment, cohesion);
+            fish.SetBehaviorWeights(repulsion, alignment, attraction);
         }
     }
 

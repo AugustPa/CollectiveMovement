@@ -5,9 +5,9 @@ public class Fish : MonoBehaviour
 
 {
     // Add weight variables
-    public float separationWeight = 1.0f;
+    public float repulsionWeight = 1.0f;
     public float alignmentWeight = 1.0f;
-    public float cohesionWeight = 1.0f;
+    public float attractionWeight = 1.0f;
     private List<Fish> fishSchool;
 
     public void SetFishSchool(List<Fish> school)
@@ -32,58 +32,58 @@ public class Fish : MonoBehaviour
         Debug.Log("Fish Update - Position: " + position + ", Velocity: " + velocity);
     }
 
-    public void SetBehaviorWeights(float separation, float alignment, float cohesion)
+    public void SetBehaviorWeights(float repulsion, float alignment, float attraction)
     {
-        separationWeight = separation;
+        repulsionWeight = repulsion;
         alignmentWeight = alignment;
-        cohesionWeight = cohesion;
+        attractionWeight = attraction;
     }
 
      private void ApplyBehaviors()
     {
         // Use the variables instead of fixed values
-        Vector3 separationForce = CalculateSeparation() * separationWeight;
+        Vector3 repulsionForce = Calculaterepulsion() * repulsionWeight;
         Vector3 alignmentForce = CalculateAlignment() * alignmentWeight;
-        Vector3 cohesionForce = CalculateCohesion() * cohesionWeight;
+        Vector3 attractionForce = Calculateattraction() * attractionWeight;
 
-        acceleration += separationForce;
+        acceleration += repulsionForce;
         acceleration += alignmentForce;
-        acceleration += cohesionForce;
+        acceleration += attractionForce;
 
         // Debug Log to check forces
-        Debug.Log("Behaviors - Separation: " + separationForce + ", Alignment: " + alignmentForce + ", Cohesion: " + cohesionForce);
+        Debug.Log("Behaviors - repulsion: " + repulsionForce + ", Alignment: " + alignmentForce + ", attraction: " + attractionForce);
     }
     
 
-    private Vector3 CalculateSeparation()
+    private Vector3 Calculaterepulsion()
     {
-        Vector3 separationVector = Vector3.zero;
+        Vector3 repulsionVector = Vector3.zero;
         int neighborsCount = 0;
-        float desiredSeparation = 1.0f; // Adjust as needed
+        float repulsionRadius = 1.0f; // Adjust as needed
 
         foreach (Fish otherFish in fishSchool)
         {
             float distance = Vector3.Distance(position, otherFish.position);
-            if (distance > 0 && distance < desiredSeparation)
+            if (distance > 0 && distance < repulsionRadius)
             {
                 Vector3 diff = position - otherFish.position;
                 diff.Normalize();
                 diff /= distance; // Weight by distance
-                separationVector += diff;
+                repulsionVector += diff;
                 neighborsCount++;
             }
         }
 
         if (neighborsCount > 0)
         {
-            separationVector /= neighborsCount;
+            repulsionVector /= neighborsCount;
         }
 
-        separationVector = new Vector3(separationVector.x, separationVector.y, 0);
+        repulsionVector = new Vector3(repulsionVector.x, repulsionVector.y, 0);
 
-        // Debug Log for Separation Force
-        Debug.Log("Separation - Count: " + neighborsCount + ", Force: " + separationVector);
-        return separationVector;
+        // Debug Log for repulsion Force
+        Debug.Log("repulsion - Count: " + neighborsCount + ", Force: " + repulsionVector);
+        return repulsionVector;
     }
 
     private Vector3 CalculateAlignment()
@@ -114,10 +114,10 @@ public class Fish : MonoBehaviour
         return averageVelocity;
     }
 
-    private Vector3 CalculateCohesion()
+    private Vector3 Calculateattraction()
     {
         Vector3 centerOfMass = Vector3.zero;
-        Vector3 cohesionVector = Vector3.zero;
+        Vector3 attractionVector = Vector3.zero;
         int neighborsCount = 0;
         float neighborRadius = 3.0f; // Adjust as needed
 
@@ -134,13 +134,13 @@ public class Fish : MonoBehaviour
         if (neighborsCount > 0)
         {
             centerOfMass /= neighborsCount;
-            cohesionVector = centerOfMass - position;
-            cohesionVector.Normalize();
-            return cohesionVector;
+            attractionVector = centerOfMass - position;
+            attractionVector.Normalize();
+            return attractionVector;
         }
-        cohesionVector = new Vector3(cohesionVector.x, cohesionVector.y, 0);
-        // Debug Log for Cohesion Force
-        Debug.Log("Cohesion - Count: " + neighborsCount + ", Force: " + cohesionVector);
+        attractionVector = new Vector3(attractionVector.x, attractionVector.y, 0);
+        // Debug Log for attraction Force
+        Debug.Log("attraction - Count: " + neighborsCount + ", Force: " + attractionVector);
         return Vector3.zero;
     }
 
