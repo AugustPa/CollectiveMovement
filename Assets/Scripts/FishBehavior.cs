@@ -8,6 +8,9 @@ public class Fish : MonoBehaviour
     public float repulsionWeight = 1.0f;
     public float alignmentWeight = 1.0f;
     public float attractionWeight = 1.0f;
+    // Add radius variables
+    public float repulsionRadius = 1.0f;
+    public float neighborRadius = 3.0f;
     private List<Fish> fishSchool;
 
     public void SetFishSchool(List<Fish> school)
@@ -29,14 +32,7 @@ public class Fish : MonoBehaviour
         acceleration = Vector3.zero;
 
         // Debug Log to check update call and final velocity
-        Debug.Log("Fish Update - Position: " + position + ", Velocity: " + velocity);
-    }
-
-    public void SetBehaviorWeights(float repulsion, float alignment, float attraction)
-    {
-        repulsionWeight = repulsion;
-        alignmentWeight = alignment;
-        attractionWeight = attraction;
+        //Debug.Log("Fish Update - Position: " + position + ", Velocity: " + velocity);
     }
 
      private void ApplyBehaviors()
@@ -51,7 +47,7 @@ public class Fish : MonoBehaviour
         acceleration += attractionForce;
 
         // Debug Log to check forces
-        Debug.Log("Behaviors - repulsion: " + repulsionForce + ", Alignment: " + alignmentForce + ", attraction: " + attractionForce);
+        //Debug.Log("Behaviors - repulsion: " + repulsionForce + ", Alignment: " + alignmentForce + ", attraction: " + attractionForce);
     }
     
 
@@ -59,7 +55,6 @@ public class Fish : MonoBehaviour
     {
         Vector3 repulsionVector = Vector3.zero;
         int neighborsCount = 0;
-        float repulsionRadius = 1.0f; // Adjust as needed
 
         foreach (Fish otherFish in fishSchool)
         {
@@ -82,7 +77,7 @@ public class Fish : MonoBehaviour
         repulsionVector = new Vector3(repulsionVector.x, repulsionVector.y, 0);
 
         // Debug Log for repulsion Force
-        Debug.Log("repulsion - Count: " + neighborsCount + ", Force: " + repulsionVector);
+        //Debug.Log("repulsion - Count: " + neighborsCount + ", Force: " + repulsionVector);
         return repulsionVector;
     }
 
@@ -90,7 +85,6 @@ public class Fish : MonoBehaviour
     {
         Vector3 averageVelocity = Vector3.zero;
         int neighborsCount = 0;
-        float neighborRadius = 3.0f; // Adjust as needed
 
         foreach (Fish otherFish in fishSchool)
         {
@@ -110,7 +104,7 @@ public class Fish : MonoBehaviour
 
         averageVelocity = new Vector3(averageVelocity.x, averageVelocity.y, 0);
         // Debug Log for Alignment Force
-        Debug.Log("Alignment - Count: " + neighborsCount + ", Force: " + averageVelocity);
+        //Debug.Log("Alignment - Count: " + neighborsCount + ", Force: " + averageVelocity);
         return averageVelocity;
     }
 
@@ -119,7 +113,6 @@ public class Fish : MonoBehaviour
         Vector3 centerOfMass = Vector3.zero;
         Vector3 attractionVector = Vector3.zero;
         int neighborsCount = 0;
-        float neighborRadius = 3.0f; // Adjust as needed
 
         foreach (Fish otherFish in fishSchool)
         {
@@ -140,7 +133,7 @@ public class Fish : MonoBehaviour
         }
         attractionVector = new Vector3(attractionVector.x, attractionVector.y, 0);
         // Debug Log for attraction Force
-        Debug.Log("attraction - Count: " + neighborsCount + ", Force: " + attractionVector);
+        //Debug.Log("attraction - Count: " + neighborsCount + ", Force: " + attractionVector);
         return Vector3.zero;
     }
 
@@ -151,5 +144,19 @@ public class Fish : MonoBehaviour
         {
             velocity = velocity.normalized * maxSpeed;
         }
+    }
+
+    public void SetBehaviorWeights(float repulsion, float alignment, float attraction)
+    {
+        repulsionWeight = repulsion;
+        alignmentWeight = alignment;
+        attractionWeight = attraction;
+    }
+
+    // Method to set behavior radii
+    public void SetBehaviorRadii(float repulsionRad, float neighborRad)
+    {
+        repulsionRadius = repulsionRad;
+        neighborRadius = neighborRad;
     }
 }
