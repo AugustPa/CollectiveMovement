@@ -2,7 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Fish : MonoBehaviour
+
 {
+    // Add weight variables
+    public float separationWeight = 1.0f;
+    public float alignmentWeight = 1.0f;
+    public float cohesionWeight = 1.0f;
     private List<Fish> fishSchool;
 
     public void SetFishSchool(List<Fish> school)
@@ -27,23 +32,28 @@ public class Fish : MonoBehaviour
         Debug.Log("Fish Update - Position: " + position + ", Velocity: " + velocity);
     }
 
-    private void ApplyBehaviors()
+    public void SetBehaviorWeights(float separation, float alignment, float cohesion)
     {
-        Vector3 separationForce = CalculateSeparation();
-        Vector3 alignmentForce = CalculateAlignment();
-        Vector3 cohesionForce = CalculateCohesion();
+        separationWeight = separation;
+        alignmentWeight = alignment;
+        cohesionWeight = cohesion;
+    }
 
-        float separationWeight = 1.5f;
-        float alignmentWeight = 1.0f;
-        float cohesionWeight = 1.0f;
+     private void ApplyBehaviors()
+    {
+        // Use the variables instead of fixed values
+        Vector3 separationForce = CalculateSeparation() * separationWeight;
+        Vector3 alignmentForce = CalculateAlignment() * alignmentWeight;
+        Vector3 cohesionForce = CalculateCohesion() * cohesionWeight;
 
-        acceleration += separationForce * separationWeight;
-        acceleration += alignmentForce * alignmentWeight;
-        acceleration += cohesionForce * cohesionWeight;
+        acceleration += separationForce;
+        acceleration += alignmentForce;
+        acceleration += cohesionForce;
 
         // Debug Log to check forces
         Debug.Log("Behaviors - Separation: " + separationForce + ", Alignment: " + alignmentForce + ", Cohesion: " + cohesionForce);
     }
+    
 
     private Vector3 CalculateSeparation()
     {
