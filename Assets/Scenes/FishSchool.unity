@@ -783,7 +783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721d2722cd888475f93077edcd377502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfFish: 2
+  fishSchoolAnalysis: {fileID: 919989525}
+  numberOfFish: 20
   fishPrefab: {fileID: 5713618355899586807, guid: 7402467874de24eb093b15188ee6ccc3, type: 3}
   fishSchool: []
   repulsionSlider: {fileID: 805013480}
@@ -1168,6 +1169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95931dd056ca0438994d7bb3e011d175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishSchoolAnalysis: {fileID: 919989525}
 --- !u!224 &1785529228 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8873439592596513286, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
