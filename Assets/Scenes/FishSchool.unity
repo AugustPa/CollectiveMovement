@@ -277,6 +277,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 345414041}
     m_Modifications:
+    - target: {fileID: 2038261448777241641, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
+      propertyPath: m_text
+      value: Attraction Weight
+      objectReference: {fileID: 0}
     - target: {fileID: 2897281767636515263, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.07058823
@@ -426,6 +430,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 725020343}
     m_Modifications:
+    - target: {fileID: 2038261448777241641, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
+      propertyPath: m_text
+      value: Repulsion Radius
+      objectReference: {fileID: 0}
     - target: {fileID: 2897281767636515263, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
       propertyPath: m_Value
       value: 0
@@ -644,6 +652,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 345414041}
     m_Modifications:
+    - target: {fileID: 2038261448777241641, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
+      propertyPath: m_text
+      value: Alignment Weight
+      objectReference: {fileID: 0}
     - target: {fileID: 2897281767636515263, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
       propertyPath: m_Colors.m_NormalColor.b
       value: 0.8666667
@@ -832,6 +844,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 725020343}
     m_Modifications:
+    - target: {fileID: 2038261448777241641, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
+      propertyPath: m_text
+      value: Neighbor Radius
+      objectReference: {fileID: 0}
     - target: {fileID: 2897281767636515263, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
       propertyPath: m_MaxValue
       value: 10
@@ -1038,7 +1054,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1194,6 +1210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 345414041}
     m_Modifications:
+    - target: {fileID: 2038261448777241641, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
+      propertyPath: m_text
+      value: Repulsion Weight
+      objectReference: {fileID: 0}
     - target: {fileID: 2897281767636515263, guid: 14acd3180faa242f09bda1e50e6f013b, type: 3}
       propertyPath: m_Value
       value: 0

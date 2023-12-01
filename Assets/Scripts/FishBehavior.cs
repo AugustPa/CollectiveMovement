@@ -28,6 +28,8 @@ public class Fish : MonoBehaviour
         velocity += acceleration * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        // Update Z rotation based on velocity
+        UpdateRotation();
         LimitSpeed();
         acceleration = Vector3.zero;
 
@@ -49,7 +51,16 @@ public class Fish : MonoBehaviour
         // Debug Log to check forces
         //Debug.Log("Behaviors - repulsion: " + repulsionForce + ", Alignment: " + alignmentForce + ", attraction: " + attractionForce);
     }
-    
+    private void UpdateRotation()
+    {
+        if (velocity != Vector3.zero)
+        {
+            // Calculate the angle in degrees
+            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            // Apply the rotation around the Z axis
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
+    }
 
     private Vector3 Calculaterepulsion()
     {
