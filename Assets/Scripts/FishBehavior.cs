@@ -56,7 +56,7 @@ public class Fish : MonoBehaviour
         if (velocity != Vector3.zero)
         {
             // Calculate the angle in degrees
-            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg + 90;
             // Apply the rotation around the Z axis
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
