@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Fish : MonoBehaviour
-
 {
     // Add weight variables
     public float repulsionWeight = 1.0f;
@@ -11,8 +10,8 @@ public class Fish : MonoBehaviour
     // Add radius variables
     public float repulsionRadius = 1.0f;
     public float neighborRadius = 3.0f;
-        private List<Fish> fishSchool;
-
+    private List<Fish> fishSchool;
+    
     public void SetFishSchool(List<Fish> school)
     {
         fishSchool = school;
@@ -21,6 +20,8 @@ public class Fish : MonoBehaviour
     public Vector3 position => transform.position;
     public Vector3 velocity;
     public Vector3 acceleration;
+    private NoiseType noiseType;
+    private float noiseStrength;
 
     private void Update()
     {
@@ -43,10 +44,12 @@ public class Fish : MonoBehaviour
         Vector3 repulsionForce = Calculaterepulsion() * repulsionWeight;
         Vector3 alignmentForce = CalculateAlignment() * alignmentWeight;
         Vector3 attractionForce = Calculateattraction() * attractionWeight;
-
+        
         acceleration += repulsionForce;
         acceleration += alignmentForce;
         acceleration += attractionForce;
+        // Apply noise
+        ApplyNoise();
 
         // Debug Log to check forces
         //Debug.Log("Behaviors - repulsion: " + repulsionForce + ", Alignment: " + alignmentForce + ", attraction: " + attractionForce);
@@ -174,5 +177,47 @@ public class Fish : MonoBehaviour
     {
         velocity = Vector3.zero;
     }
+    public void SetNoiseParameters(NoiseType type, float strength)
+    {
+        noiseType = type;
+        noiseStrength = strength;
+    }
+    private void ApplyNoise()
+    {
+        float noiseAngle = 0f;
+        switch (noiseType)
+        {
+            case NoiseType.Uniform:
+                noiseAngle = Random.Range(-noiseStrength, noiseStrength);
+                break;
+            case NoiseType.Gaussian:
+                noiseAngle = GenerateGaussianNoise();
+                break;
+            case NoiseType.Perlin:
+                noiseAngle = GeneratePerlinNoise();
+                break;
+        }
 
+        if (noiseAngle != 0f)
+        {
+            velocity = Quaternion.Euler(0, 0, noiseAngle) * velocity;
+        }
+    }
+
+    private float GenerateGaussianNoise()
+    {
+        // Simple implementation of Gaussian noise
+        float u1 = 1.0f - Random.value; // Uniform(0,1] random doubles
+        float u2 = 1.0f - Random.value;
+        float randStdNormal = Mathf.Sqrt(-2.0f * Mathf.Log(u1)) *
+                            Mathf.Sin(2.0f * Mathf.PI * u2); // Random normal(0,1)
+        return noiseStrength * randStdNormal;
+    }
+
+    private float GeneratePerlinNoise()
+    {
+        // Example implementation of Perlin noise
+        float perlinValue = Mathf.PerlinNoise(Time.time, position.y);
+        return (perlinValue - 0.5f) * 2 * noiseStrength; // Scale and shift to [-noiseStrength, noiseStrength]
+    }
 }

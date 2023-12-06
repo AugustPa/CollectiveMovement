@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Required for UI elements
-
+public enum NoiseType { None, Uniform, Gaussian, Perlin }
 public class Simulation : MonoBehaviour
 {
     public FishSchoolAnalysis fishSchoolAnalysis;
@@ -21,6 +21,8 @@ public class Simulation : MonoBehaviour
     // Additional UI Sliders for radii
     public Slider repulsionRadiusSlider;
     public Slider neighborRadiusSlider;
+    public NoiseType noiseType = NoiseType.None;
+    public float noiseStrength = 0.1f;
 
     private void Start()
     {
@@ -36,6 +38,15 @@ public class Simulation : MonoBehaviour
     private void Update()
     {
         UpdateFishBehavior(); // Continuously update weights and radii
+            // Check for key presses
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit(); // Quit the application
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetFishPositionsAndVelocities();
+        }
     }
 
     private void InitializeFishSchool()
@@ -80,6 +91,7 @@ public class Simulation : MonoBehaviour
         {
             fish.SetBehaviorWeights(repulsion, alignment, attraction);
             fish.SetBehaviorRadii(repulsionRadius, neighborRadius);
+            fish.SetNoiseParameters(noiseType, noiseStrength);
         }
     }
 
@@ -102,6 +114,25 @@ public class Simulation : MonoBehaviour
                 fish.transform.position = randomPosition;
                 fish.ResetVelocity();
             }
+        }
+    }
+      public void OnNoiseTypeChanged(int noiseTypeIndex)
+    {
+        noiseType = (NoiseType)noiseTypeIndex;
+        // Update the noise type for all fish
+        foreach (Fish fish in fishSchool)
+        {
+            fish.SetNoiseParameters(noiseType, noiseStrength);
+        }
+    }
+
+    public void OnNoiseStrengthChanged(float strength)
+    {
+        noiseStrength = strength;
+        // Update the noise strength for all fish
+        foreach (Fish fish in fishSchool)
+        {
+            fish.SetNoiseParameters(noiseType, noiseStrength);
         }
     }
 
