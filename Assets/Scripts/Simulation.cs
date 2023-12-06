@@ -5,18 +5,20 @@ using UnityEngine.UI; // Required for UI elements
 
 public class Simulation : MonoBehaviour
 {
-     public FishSchoolAnalysis fishSchoolAnalysis;
+    public FishSchoolAnalysis fishSchoolAnalysis;
 
     public int numberOfFish = 100;
     public GameObject fishPrefab;
     public List<Fish> fishSchool = new List<Fish>();
+    public bool initializeInCircularMotion = false; // New boolean to toggle initial conditions
+    public float initialSpeed = 1.0f; // Speed for initial circular motion
 
     // UI Sliders
     public Slider repulsionSlider;
     public Slider alignmentSlider;
     public Slider attractionSlider;
 
-     // Additional UI Sliders for radii
+    // Additional UI Sliders for radii
     public Slider repulsionRadiusSlider;
     public Slider neighborRadiusSlider;
 
@@ -40,53 +42,66 @@ public class Simulation : MonoBehaviour
     {
         for (int i = 0; i < numberOfFish; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.value, Random.value, 0);
-            GameObject fishObject = Instantiate(fishPrefab, randomPosition, Quaternion.identity);
-            Fish fish = fishObject.GetComponent<Fish>();
-
-            if (fish != null)
+            GameObject fishObject;
+            if (initializeInCircularMotion)
             {
-                fishSchool.Add(fish);
+                // Circular motion initialization
+                Vector3 position = Random.insideUnitCircle.normalized * 1.0f; // Adjust 5.0f to set the radius
+                fishObject = Instantiate(fishPrefab, position, Quaternion.identity);
+                Fish fish = fishObject.GetComponent<Fish>();
+                Vector3 perpVelocity = new Vector3(-position.y, position.x, 0).normalized * initialSpeed;
+                fish.velocity = perpVelocity;
             }
-        }
+            else
+            {
+                // Random position initialization
+                Vector3 randomPosition = new Vector3(Random.value, Random.value, 0);
+                fishObject = Instantiate(fishPrefab, randomPosition, Quaternion.identity);
+            }
 
-        foreach (Fish fish in fishSchool)
-        {
-            fish.SetFishSchool(fishSchool);
+            Fish fishComponent = fishObject.GetComponent<Fish>();
+            if (fishComponent != null)
+            {
+                fishSchool.Add(fishComponent);
+                fishComponent.SetFishSchool(fishSchool);
+            }
         }
     }
 
-     private void UpdateFishBehavior()
+    private void UpdateFishBehavior()
     {
-        // Get values from all sliders
         float repulsion = repulsionSlider.value;
         float alignment = alignmentSlider.value;
         float attraction = attractionSlider.value;
         float repulsionRadius = repulsionRadiusSlider.value;
         float neighborRadius = neighborRadiusSlider.value;
-                // Log the current slider values
-        // Debug.Log("Updating Fish Behavior - Repulsion: " + repulsion 
-            //   + ", Alignment: " + alignment 
-            //   + ", Attraction: " + attraction 
-            //   + ", Repulsion Radius: " + repulsionRadius 
-            //   + ", Neighbor Radius: " + neighborRadiues);
-        // Update each fish with new weights and radii
+
         foreach (Fish fish in fishSchool)
         {
             fish.SetBehaviorWeights(repulsion, alignment, attraction);
             fish.SetBehaviorRadii(repulsionRadius, neighborRadius);
         }
     }
+
     public void ResetFishPositionsAndVelocities()
     {
         foreach (Fish fish in fishSchool)
         {
-            // Reset position
-            Vector3 randomPosition = new Vector3(Random.value, Random.value, 0);
-            fish.transform.position = randomPosition;
-
-            // Reset velocity
-            fish.ResetVelocity();
+            if (initializeInCircularMotion)
+            {
+                // Reset position and velocity for circular motion
+                Vector3 position = Random.insideUnitCircle.normalized * 1.0f; // Adjust 5.0f to set the radius
+                fish.transform.position = position;
+                Vector3 perpVelocity = new Vector3(-position.y, position.x, 0).normalized * initialSpeed;
+                fish.velocity = perpVelocity;
+            }
+            else
+            {
+                // Reset position and velocity for random initialization
+                Vector3 randomPosition = new Vector3(Random.value, Random.value, 0);
+                fish.transform.position = randomPosition;
+                fish.ResetVelocity();
+            }
         }
     }
 
