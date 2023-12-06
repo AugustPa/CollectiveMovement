@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1357328341306821464}
   - component: {fileID: 1392324488844285131}
+  - component: {fileID: 2448043406851592234}
   m_Layer: 0
   m_Name: humans_ship_04
   m_TagString: Untagged
@@ -84,3 +85,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2448043406851592234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390892829530955026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee637bc6cef4946a3bb7aa1182b99812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  repulsionWeight: 1
+  alignmentWeight: 1
+  attractionWeight: 1
+  repulsionRadius: 1
+  neighborRadius: 3
+  velocity: {x: 0, y: 0, z: 0}
+  acceleration: {x: 0, y: 0, z: 0}

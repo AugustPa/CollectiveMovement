@@ -40,7 +40,7 @@ public class Simulation : MonoBehaviour
     {
         for (int i = 0; i < numberOfFish; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.value, Random.value, Random.value);
+            Vector3 randomPosition = new Vector3(Random.value, Random.value, 0);
             GameObject fishObject = Instantiate(fishPrefab, randomPosition, Quaternion.identity);
             Fish fish = fishObject.GetComponent<Fish>();
 
