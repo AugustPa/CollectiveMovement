@@ -11,7 +11,7 @@ public class Fish : MonoBehaviour
     // Add radius variables
     public float repulsionRadius = 1.0f;
     public float neighborRadius = 3.0f;
-    private List<Fish> fishSchool;
+        private List<Fish> fishSchool;
 
     public void SetFishSchool(List<Fish> school)
     {
@@ -170,4 +170,9 @@ public class Fish : MonoBehaviour
         repulsionRadius = repulsionRad;
         neighborRadius = neighborRad;
     }
+    public void ResetVelocity()
+    {
+        velocity = Vector3.zero;
+    }
+
 }

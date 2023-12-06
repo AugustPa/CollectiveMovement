@@ -64,7 +64,7 @@ public class Simulation : MonoBehaviour
         float attraction = attractionSlider.value;
         float repulsionRadius = repulsionRadiusSlider.value;
         float neighborRadius = neighborRadiusSlider.value;
-        // Log the current slider values
+                // Log the current slider values
         // Debug.Log("Updating Fish Behavior - Repulsion: " + repulsion 
             //   + ", Alignment: " + alignment 
             //   + ", Attraction: " + attraction 
@@ -75,6 +75,18 @@ public class Simulation : MonoBehaviour
         {
             fish.SetBehaviorWeights(repulsion, alignment, attraction);
             fish.SetBehaviorRadii(repulsionRadius, neighborRadius);
+        }
+    }
+    public void ResetFishPositionsAndVelocities()
+    {
+        foreach (Fish fish in fishSchool)
+        {
+            // Reset position
+            Vector3 randomPosition = new Vector3(Random.value, Random.value, 0);
+            fish.transform.position = randomPosition;
+
+            // Reset velocity
+            fish.ResetVelocity();
         }
     }
 
